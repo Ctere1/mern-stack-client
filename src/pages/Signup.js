@@ -65,7 +65,7 @@ function Signup() {
             }
         }));
         //signup
-        signupUser({ name, email, password, picture: url, referralCode: makeCode(5) }).then(({ data }) => {
+        signupUser({ name, email, password, picture: url }).then(({ data }) => {
             if (data) {
                 console.log(data);
                 navigate("/chat");
@@ -73,17 +73,7 @@ function Signup() {
         });
     }
 
-    function makeCode(length) {
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() *
-                charactersLength));
-        }
-        return result;
-    }
-
+ 
     return (
         <Container>
             <Row>
@@ -97,6 +87,7 @@ function Signup() {
                             <input type='file' id='image-upload' hidden accept='image/png, image/jpg' onChange={validateImg}></input>
                         </div>
                         <Form.Group className="mb-3" controlId="formBasicName">
+                            {error && <p className="alert alert-danger">{error.data}</p>}
                             <Form.Label>Name</Form.Label>
                             <Form.Control type="text" placeholder="Your Name" onChange={(e) => setName(e.target.value)} value={name} />
                         </Form.Group>
