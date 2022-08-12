@@ -12,7 +12,7 @@ const appApi = createApi({
         // creating the user
         signupUser: builder.mutation({
             query: (user) => ({
-                url: "/v1/user-create",
+                url: "/user/signup",
                 method: "POST",
                 body: user,
             }),
@@ -21,7 +21,7 @@ const appApi = createApi({
         // login
         loginUser: builder.mutation({
             query: (user) => ({
-                url: "/v1/login",
+                url: "/user/login",
                 method: "POST",
                 body: user,
             }),
@@ -39,7 +39,7 @@ const appApi = createApi({
         // delete user
         deleteUser: builder.mutation({
             query: (payload) => ({
-                url: "v1/user-delete",
+                url: "user/delete",
                 method: "DELETE",
                 body: payload,
             }),
@@ -48,7 +48,7 @@ const appApi = createApi({
         // get all users
         getUsers: builder.mutation({
             query: (payload) => ({
-                url: "v1/users",
+                url: "user/all",
                 method: "GET",
                 body: payload,
             }),
@@ -57,7 +57,7 @@ const appApi = createApi({
         // update user
         updateUser: builder.mutation({
             query: (user) => ({
-                url: "v1/user-update",
+                url: "user/update",
                 method: "PUT",
                 body: user,
             }),
@@ -66,7 +66,7 @@ const appApi = createApi({
         // update user
         addReferralPoint: builder.mutation({
             query: (user) => ({
-                url: "v1/referral",
+                url: "user/referral",
                 method: "PUT",
                 body: user,
             }),

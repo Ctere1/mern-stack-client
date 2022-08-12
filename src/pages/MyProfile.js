@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { useDeleteUserMutation, useUpdateUserMutation } from "../services/appApi";
 import { useSelector } from "react-redux";
 import Card from 'react-bootstrap/Card';
@@ -68,7 +68,7 @@ function MyProfile() {
                         <Form.Label>Current Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" onChange={(e) => setOldPassword(e.target.value)} value={oldPassword} />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" controlId="formBasicPassword2">
                         <Form.Label>New Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" onChange={(e) => setNewPassword(e.target.value)} value={newPassword} />
                     </Form.Group>
