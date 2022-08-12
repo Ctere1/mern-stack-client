@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useSignupUserMutation, useGetUsersMutation, useUpdateUserMutation } from "../services/appApi";
+import { useSignupUserMutation, useGetUsersMutation, useAddReferralPointMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
 import './Signup.css';
 import pp from "../assets/avatar.jpg";
@@ -20,7 +20,7 @@ function Signup() {
     const navigate = useNavigate();
     const [signupUser, { isLoading, error }] = useSignupUserMutation();
     const [getUsers] = useGetUsersMutation();
-    const [updateUser] = useUpdateUserMutation();
+    const [addReferralPoint] = useAddReferralPointMutation();
 
     function validateImg(e) {
         const file = e.target.files[0];
@@ -60,8 +60,8 @@ function Signup() {
         const users = await getUsers();
         //check all codes if there is a match, give the points to matched user
         console.log(users.data.forEach(function (user) {
-            if (user.referralCode == referralCode) {
-                updateUser(user);
+            if (user.referralCode === referralCode) {
+                addReferralPoint(user);
             }
         }));
         //signup

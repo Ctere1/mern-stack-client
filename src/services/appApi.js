@@ -61,11 +61,20 @@ const appApi = createApi({
                 method: "PUT",
                 body: user,
             }),
+        }),
+
+        // update user
+        addReferralPoint: builder.mutation({
+            query: (user) => ({
+                url: "v1/referral",
+                method: "PUT",
+                body: user,
+            }),
         })
 
     }),
 });
 
-export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation } = appApi;
+export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation,useAddReferralPointMutation } = appApi;
 
 export default appApi;
