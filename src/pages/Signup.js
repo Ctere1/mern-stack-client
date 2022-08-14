@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useSignupUserMutation, useGetUsersMutation, useAddReferralPointMutation } from "../services/appApi";
+import { useSignupUserMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
 import './Signup.css';
 import pp from "../assets/avatar.jpg";
@@ -10,7 +10,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [referralCode, setReferralCode] = useState('');
+    const [referralFromCode, setReferralFromCode] = useState('');
 
     const [image, setImage] = useState(null);
     const [uploadingImg, setUploadingImg] = useState(false);
@@ -18,8 +18,6 @@ function Signup() {
 
     const navigate = useNavigate();
     const [signupUser, { isLoading, error }] = useSignupUserMutation();
-    const [getUsers] = useGetUsersMutation();
-    const [addReferralPoint] = useAddReferralPointMutation();
 
     function validateImg(e) {
         const file = e.target.files[0];
@@ -55,24 +53,17 @@ function Signup() {
         e.preventDefault();
         const url = await uploadeImg(image)
         console.log(url);
-
-        const users = await getUsers();
-        //check all codes if there is a match, give the points to matched user
-        console.log(users.data.forEach(function (user) {
-            if (user.referralCode === referralCode) {
-                addReferralPoint(user);
-            }
-        }));
         //signup
-        signupUser({ name, email, password, picture: url }).then(({ data }) => {
+        signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
             if (data) {
                 console.log(data);
-                navigate("/chat");
+                alert('Signed up. Please login now.');
+                navigate("/login");
             }
         });
     }
 
- 
+
     return (
         <Container>
             <Row>
@@ -106,7 +97,7 @@ function Signup() {
 
                         <Form.Group className="mb-3" controlId="formBasicText">
                             <Form.Label>Referral Code</Form.Label>
-                            <Form.Control type="text" placeholder="Enter code" onChange={(e) => setReferralCode(e.target.value)} value={referralCode} />
+                            <Form.Control type="text" placeholder="Enter code" onChange={(e) => setReferralFromCode(e.target.value)} value={referralFromCode} />
                             <Form.Text className="text-muted">
                                 (optional)
                             </Form.Text>

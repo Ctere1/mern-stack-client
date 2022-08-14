@@ -17,6 +17,8 @@ function MyProfile() {
     async function handleDelete(e) {
         e.preventDefault();
         await deleteUser(user);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         // redirect to home page
         window.location.replace("/");
     }
@@ -61,7 +63,7 @@ function MyProfile() {
             <Card.Body  >
                 <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleUpdate}>
                     <Form.Group className="mb-3" controlId="formBasicName" >
-                        <Form.Label class="text-left">New User Name</Form.Label>
+                        <Form.Label>New User Name</Form.Label>
                         <Form.Control type="text" placeholder="Name" onChange={(e) => setNewName(e.target.value)} value={newName} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">

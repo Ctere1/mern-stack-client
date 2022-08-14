@@ -8,9 +8,11 @@ import logo from "../assets/Logo.png";
 function Navigation() {
     const user = useSelector((state) => state.user);
     const [logoutUser] = useLogoutUserMutation();
-    
+
     async function handleLogout(e) {
         e.preventDefault();
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         await logoutUser(user);
         // redirect to home page
         window.location.replace("/");

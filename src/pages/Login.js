@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Col, Container, Form, Row, Button, Spinner } from "react-bootstrap";
-import { useLoginUserMutation } from "../services/appApi";
+import { useLoginUserMutation, useAddReferralPointMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { AppContext } from "../context/appContext";
+
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -11,11 +12,18 @@ function Login() {
     const navigate = useNavigate();
     const { socket } = useContext(AppContext);
     const [loginUser, { isLoading, error }] = useLoginUserMutation();
+    const [addReferralPoint] = useAddReferralPointMutation();
+
     function handleLogin(e) {
         e.preventDefault();
         // login logic
         loginUser({ email, password }).then(({ data }) => {
             if (data) {
+                const { accessToken,refreshToken } = data;
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
+                //check the RefferalFromCode for points update
+                addReferralPoint(data);
                 // socket work
                 socket.emit("new-user");
                 // navigate to the chat
