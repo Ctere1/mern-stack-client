@@ -27,10 +27,6 @@ function MessageForm() {
         return month + "/" + day + "/" + year;
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-    }
-
     function scrollToBottom() {
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }

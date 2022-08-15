@@ -28,7 +28,6 @@ function MyProfile() {
         if (newName && oldPassword) {
             await updateUser({ newName, email, oldPassword, newPassword });
             // refresh profile page
-            window.location.replace("/profile");
             alert('Updated');
         } else {
             alert('Enter your current password');

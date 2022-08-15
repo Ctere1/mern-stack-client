@@ -32,10 +32,11 @@ function Signup() {
     async function uploadeImg(e) {
         const data = new FormData();
         data.append('file', image);
-        data.append('upload_preset', 'jmbqiohds'); //cloudify storage name
+        data.append('upload_preset', process.env.REACT_APP_CLOUDINARY_STORAGE_NAME);
+        const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_USER_NAME}/image/upload`
         try {
             setUploadingImg(true);
-            let res = await fetch('https://api.cloudinary.com/v1_1/dyzuhnuw6/image/upload', {
+            let res = await fetch(url, {
                 method: 'post',
                 body: data
             });
@@ -46,7 +47,6 @@ function Signup() {
             setUploadingImg(false);
             console.log(error);
         }
-
     }
 
     async function handleSignup(e) {
@@ -57,7 +57,7 @@ function Signup() {
         signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
             if (data) {
                 console.log(data);
-                alert('Signed up. Please login now.');
+                alert('Account created. Please login now.');
                 navigate("/login");
             }
         });
