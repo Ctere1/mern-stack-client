@@ -45,6 +45,7 @@ function Navigation() {
                                 id="basic-nav-dropdown"
                             >
                                 <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
+                                <NavDropdown.Item href="/board">Leaderboard</NavDropdown.Item>
                                 <NavDropdown.Item>
                                     <Button variant="danger" onClick={handleLogout}>
                                         Logout
