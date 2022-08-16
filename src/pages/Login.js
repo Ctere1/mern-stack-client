@@ -19,11 +19,11 @@ function Login() {
         // login logic
         loginUser({ email, password }).then(({ data }) => {
             if (data) {
-                const { accessToken,refreshToken } = data;
+                const { user, accessToken, refreshToken } = data;
                 localStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("refreshToken", refreshToken);
                 //check the RefferalFromCode for points update
-                addReferralPoint(data);
+                addReferralPoint(user);
                 // socket work
                 socket.emit("new-user");
                 // navigate to the chat

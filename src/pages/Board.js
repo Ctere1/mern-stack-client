@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Form, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useGetUsersMutation } from "../services/appApi";
 import Profiles from '../components/Profiles';
@@ -13,19 +13,21 @@ function Board() {
 
 
     useEffect(() => {
-        setLoading(true);
-        getUsers().then((data) => {
-            setUsers(data.data)
-        }).catch((err) => {
-            console.log(err);
-        }).finally(() => {
-            setLoading(false);
-        });
+        if (user) {
+            setLoading(true);
+            getUsers(user).then((data) => {
+                setUsers(data.data)
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setLoading(false);
+            });
+        }
     }, [])
 
 
     if (loading) {
-        return <p>Data is loading...</p>;
+        return <p className='text-center'>Data is loading...</p>;
     }
 
     return (<Container>

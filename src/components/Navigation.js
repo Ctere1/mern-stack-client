@@ -29,23 +29,34 @@ function Navigation() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
+                        <LinkContainer to="/">
+                            <Nav.Link>Home</Nav.Link>
+                        </LinkContainer>
                         {!user && (
                             <LinkContainer to="/login">
                                 <Nav.Link>Login</Nav.Link>
                             </LinkContainer>
                         )}
                         {user && (
+                            <LinkContainer to="/board">
+                                <Nav.Link>Leaderboard</Nav.Link>
+                            </LinkContainer>
+                        )}
+                        {user && (
+                            <LinkContainer to="/chat">
+                                <Nav.Link>Chat</Nav.Link>
+                            </LinkContainer>
+                        )}
+                        {user && (
                             <NavDropdown
                                 title={
                                     <>
-                                        <img src={user.picture} style={{ width: 30, height: 30, marginRight: 10, objectFit: "cover", borderRadius: "50%" }} />
-                                        {user.name}
+                                        <img src={user.picture} style={{ width: 30, height: 30, objectFit: "cover", borderRadius: "50%" }} />
                                     </>
                                 }
                                 id="basic-nav-dropdown"
                             >
                                 <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
-                                <NavDropdown.Item href="/board">Leaderboard</NavDropdown.Item>
                                 <NavDropdown.Item>
                                     <Button variant="danger" onClick={handleLogout}>
                                         Logout

@@ -51,12 +51,11 @@ const appApi = createApi({
 
         // get all users
         getUsers: builder.mutation({
-            query: (payload) => ({
+            query: (user) => ({
                 url: "/api/user/all",
                 method: "GET",
-                body: payload,
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': `Bearer ${getToken(user)}`
                 },
             }),
         }),
@@ -68,19 +67,19 @@ const appApi = createApi({
                 method: "PUT",
                 body: user,
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': `Bearer ${getToken(user)}`
                 },
             }),
         }),
 
-        // update user
+        // update user point via referral code
         addReferralPoint: builder.mutation({
-            query: (payload) => ({
+            query: (user) => ({
                 url: "/api/user/referral",
                 method: "PUT",
-                body: payload,
+                body: user,
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': `Bearer ${getToken(user)}`
                 },
             }),
         })
@@ -88,19 +87,22 @@ const appApi = createApi({
     }),
 });
 
-function getToken() {
-    let accessToken = localStorage.getItem("accessToken");
-    let refreshToken = localStorage.getItem("refreshToken");
+function getToken(user) {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
     const { exp } = jwt_decode(accessToken)
     // Refresh the token a minute early to avoid latency issues
     const expirationTime = (exp * 1000) - 60000
     if (Date.now() >= expirationTime) {
-        let response = fetch('http://localhost:5001/api/auth/refreshToken', {
+        console.log('Token expired. Getting new token...');
+        fetch('http://localhost:5001/api/auth/refreshToken', {
             method: 'post',
-            body: { token: refreshToken }
+            body: { token: refreshToken, email: user.email }
+        }).then((response) => {
+            localStorage.setItem("accessToken", response.accessToken);
+            localStorage.setItem("refreshToken", response.refreshToken);
+            console.log('New token added');
         });
-        localStorage.setItem("accessToken", response.accessToken);
-        localStorage.setItem("refreshToken", response.refreshToken);
     }
     return localStorage.getItem("accessToken");
 }
