@@ -20,11 +20,11 @@ function Item(data) {
         
                         <div className="info">
                             <h3 className='name text-dark'>{value.name}</h3>    
-                            <span>{value.name}</span>
+                            <span>{value.status}</span>
                         </div>                
                     </div>
                     <div className="item">
-                        <span>{value.points}</span>
+                        <span>Point: {value.points}</span>
                     </div>
                 </div>
                 )
