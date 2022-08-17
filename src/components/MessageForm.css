@@ -4,7 +4,7 @@
     overflow-y: scroll;
     margin-bottom: 20px;
     border-radius: 1%;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
 }
 
 /* width */
@@ -86,7 +86,7 @@
 .message-inner {
     margin-left: 20px;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 7px;
     min-width: 200px;
     max-width: 90%;
     text-align: left;
@@ -111,6 +111,7 @@
 
 .message-timestamp-left {
     font-size: 0.85em;
+    color: grey;
     font-weight: 300;
     margin-top: 10px;
 }
@@ -140,4 +141,9 @@
     margin-bottom: 30px;
     border-radius: 50%;
     margin-left: 10px;
+}
+
+.send-message-icon {
+    margin: 9px auto;
+    display: inline-block;
 }

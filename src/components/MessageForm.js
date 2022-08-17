@@ -55,7 +55,7 @@ function MessageForm() {
                     <>
                         <div className="alert alert-info conversation-info">
                             <div>
-                              <img src={privateMemberMsg.picture} className="conversation-profile-pic" /> {privateMemberMsg.name}
+                                <img src={privateMemberMsg.picture} className="conversation-profile-pic" /> {privateMemberMsg.name}
                             </div>
                         </div>
                     </>
@@ -82,17 +82,24 @@ function MessageForm() {
                     ))}
                 <div ref={messageEndRef} />
             </div>
-            <InputEmoji
-                value={message}
-                onChange={setMessage}
-                cleanOnEnter
-                onEnter={handleSubmit}
-                placeholder="Type a message and enter"
-                fontSize={18}
-                borderRadius={10}
-                theme={'light'}
-                borderColor={'grey'}
-            />
+            <Row>
+                <Col md={11}>
+                    <InputEmoji
+                        value={message}
+                        onChange={setMessage}
+                        cleanOnEnter
+                        onEnter={handleSubmit}
+                        placeholder="Type a message"
+                        fontSize={18}
+                        borderRadius={10}
+                        theme={'light'}
+                        borderColor={'grey'}
+                    />
+                </Col>
+                <Col md={1}>
+                    <Button onClick={handleSubmit} style={{ width: "100%" }}><i className="fas fa-paper-plane send-message-icon"></i></Button>
+                </Col>
+            </Row>
         </>
     );
 }
