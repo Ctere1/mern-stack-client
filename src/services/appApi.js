@@ -96,12 +96,14 @@ function getToken(user) {
     if (Date.now() >= expirationTime) {
         console.log('Token expired. Getting new token...');
         fetch('http://localhost:5001/api/auth/refreshToken', {
-            method: 'post',
+            method: 'POST',
             body: { token: refreshToken, email: user.email }
         }).then((response) => {
-            localStorage.setItem("accessToken", response.accessToken);
-            localStorage.setItem("refreshToken", response.refreshToken);
-            console.log('New token added');
+            if (response.accessToken) {
+                localStorage.setItem("accessToken", response.accessToken);
+                localStorage.setItem("refreshToken", response.refreshToken);
+                console.log('New token added');
+            }
         });
     }
     return localStorage.getItem("accessToken");

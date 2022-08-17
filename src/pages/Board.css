@@ -20,7 +20,7 @@
 }
 
 .board .duration > button{
-    border: 1px solid var(--color-light);
+    border: 1px solid black;
     padding: .5em 2em;
     border-radius: 50px;
     background-color: transparent;
@@ -28,7 +28,7 @@
 }
 
 .board .duration > button:hover{
-    background-color: var(--color-dark);
+    background-color:grey;
     color: var(--color-light);
 }
 
