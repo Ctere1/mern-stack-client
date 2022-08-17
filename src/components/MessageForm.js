@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
+import InputEmoji from 'react-input-emoji'
 import "./MessageForm.css";
 
 function MessageForm() {
@@ -37,8 +38,7 @@ function MessageForm() {
         setMessages(roomMessages);
     });
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function handleSubmit() {
         if (!message) return;
         const today = new Date();
         const minutes = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
@@ -55,7 +55,7 @@ function MessageForm() {
                     <>
                         <div className="alert alert-info conversation-info">
                             <div>
-                                Your conversation with {privateMemberMsg.name} <img src={privateMemberMsg.picture} className="conversation-profile-pic" />
+                              <img src={privateMemberMsg.picture} className="conversation-profile-pic" /> {privateMemberMsg.name}
                             </div>
                         </div>
                     </>
@@ -82,20 +82,17 @@ function MessageForm() {
                     ))}
                 <div ref={messageEndRef} />
             </div>
-            <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col md={11}>
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="Your message" disabled={!user} value={message} onChange={(e) => setMessage(e.target.value)}></Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col md={1}>
-                        <Button variant="primary" type="submit" style={{ width: "100%", backgroundColor: "orange" }} disabled={!user}>
-                            <i className="fas fa-paper-plane"></i>
-                        </Button>
-                    </Col>
-                </Row>
-            </Form>
+            <InputEmoji
+                value={message}
+                onChange={setMessage}
+                cleanOnEnter
+                onEnter={handleSubmit}
+                placeholder="Type a message and enter"
+                fontSize={18}
+                borderRadius={10}
+                theme={'light'}
+                borderColor={'grey'}
+            />
         </>
     );
 }
