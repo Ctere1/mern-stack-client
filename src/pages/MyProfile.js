@@ -3,6 +3,9 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useDeleteUserMutation, useUpdateUserMutation } from "../services/appApi";
 import { useSelector } from "react-redux";
 import Card from 'react-bootstrap/Card';
+import { useReward } from 'react-rewards';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 import "./MyProfile.css";
 
 function MyProfile() {
@@ -13,6 +16,16 @@ function MyProfile() {
     const [newName, setNewName] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [oldPassword, setOldPassword] = useState('');
+    const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('confettiReward', 'confetti');
+    const { reward: balloonsReward, isAnimating: isBalloonsAnimating } = useReward('balloonsReward', 'balloons');
+    const popoverCode = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">Referral Code</Popover.Header>
+            <Popover.Body>
+                Share <strong>{user.referralCode}</strong> code with your friends and grab the 50 point!
+            </Popover.Body>
+        </Popover>
+    );
 
     async function handleDelete(e) {
         e.preventDefault();
@@ -35,10 +48,10 @@ function MyProfile() {
     }
 
     return (<Container>
-        <Card className="text-left">
+        <Card className="text-left" border="dark">
             <Card.Header>
+                <Card.Img variant="top" style={{ height: '30px', width: '30px' }} src='https://cdn-icons-png.flaticon.com/512/126/126472.png?w=826&t=st=1660768376~exp=1660768976~hmac=038c41fda2318a9af1c3dae603c9336ccd661327a36dfb7f327475efeecd28fc' />{' '}
                 Account Info
-                <Card.Img variant="top" />
             </Card.Header>
             <Card.Body  >
                 <Card.Title>
@@ -46,8 +59,14 @@ function MyProfile() {
                     <p>Email: {user.email}</p>
                 </Card.Title>
                 <Card.Text>
-                    <p style={{ color: 'green' }}>My Points: {user.points} </p>
-                    <p style={{ color: 'red' }}>My Referral Code: {user.referralCode}</p>
+                    <Button variant="primary" disabled={isConfettiAnimating || isBalloonsAnimating} onClick={() => { confettiReward(); balloonsReward(); }} className='points'>
+                        My Points:  {user.points}
+                    </Button>{' '}
+                    <span id="confettiReward" />
+                    <span id="balloonsReward" />
+                    <OverlayTrigger trigger="click" placement="right" overlay={popoverCode}>
+                        <Button variant="success">My Referral Code</Button>
+                    </OverlayTrigger>
                 </Card.Text>
                 <Button variant="outline-danger" onClick={handleDelete} style={{ marginTop: '10px' }}>
                     Delete Account
@@ -55,7 +74,7 @@ function MyProfile() {
             </Card.Body>
         </Card>
 
-        <Card className="text-left" style={{ marginTop: '10px' }} >
+        <Card className="text-left" border="dark" style={{ marginTop: '10px' }} >
             <Card.Header>
                 Update Account
             </Card.Header>

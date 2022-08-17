@@ -4,7 +4,7 @@
     overflow-y: scroll;
     margin-bottom: 20px;
     border-radius: 1%;
-    background-color: whitesmoke;
+    background-color: rgb(138, 157, 182);
 }
 
 /* width */
@@ -19,13 +19,13 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: lightgray;
+    background: rgb(59, 59, 59);
 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #888;
+    background: rgb(173, 88, 88);
 }
 
 @keyframes bounce {
@@ -84,22 +84,28 @@
 
 
 .message-inner {
+    border: 2px solid white;
     margin-left: 20px;
     margin-bottom: 10px;
     padding: 7px;
-    min-width: 200px;
+    min-width: 250px;
     max-width: 90%;
     text-align: left;
     min-height: 80px;
     font: 400 1em, sans-serif;
     display: inline-block;
-    border-radius: 10px;
+    border-radius: 20px;
+    border-style: solid;
+    border-top-left-radius: 0%;
     background-color: #d1e7dd;
     animation-duration: 0.5s;
     animation-name: bounce;
 }
 
 .incoming-message .message-inner {
+    border-radius: 20px;
+    border-top-right-radius: 0;
+    border-style: solid;
     background-color: #ffdab9;
 }
 
@@ -127,20 +133,20 @@
 }
 
 .conversation-info {
-    padding: 0;
-    margin: 0 auto;
+    padding: 0px;
+    margin: 0px auto;
     text-align: left;
-    height: 100px;
+    height: 90px;
 }
 
 .conversation-profile-pic {
     width: 60px;
     height: 60px;
     object-fit: cover;
-    margin: 10px auto;
-    margin-bottom: 30px;
+    margin: 0px auto;
+    margin-bottom: 3px;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .send-message-icon {
