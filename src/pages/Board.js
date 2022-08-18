@@ -10,7 +10,7 @@ function Board() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [period, setPeriod] = useState(0);
-    const [getUsers, { isLoading, error }] = useGetUsersMutation();
+    const [getUsers] = useGetUsersMutation();
 
     useEffect(() => {
         if (user) {
@@ -22,10 +22,7 @@ function Board() {
             }).finally(() => {
                 setLoading(false);
             });
-        }else{
-            console.log('Niye user yok')
         }
-
     }, [])
 
 

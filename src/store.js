@@ -4,6 +4,7 @@ import appApi from "./services/appApi";
 
 // persist our store
 import storage from "redux-persist/lib/storage";
+import storageSession from 'redux-persist/lib/storage/session'
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
@@ -16,7 +17,7 @@ const reducer = combineReducers({
 
 const persistConfig = {
     key: "root",
-    storage,
+    storage: storageSession,
     blackList: [appApi.reducerPath],
 };
 
