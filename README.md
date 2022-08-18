@@ -2,6 +2,8 @@
 
 Live: https://student-club-mern.herokuapp.com/
 
+For server side see: https://github.com/Ctere1/mern-stack-server
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
