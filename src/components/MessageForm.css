@@ -1,10 +1,9 @@
 .messages-output {
     height: 80vh;
-    border: 1px solid lightgray;
     overflow-y: scroll;
     margin-bottom: 20px;
     border-radius: 1%;
-    background-color: rgb(138, 157, 182);
+    background-color: rgb(243, 243, 243);
 }
 
 /* width */

@@ -7,11 +7,11 @@ function Chat() {
     return (
         <Container>
             <Row>
-                <Col md={4}>
+                <Col md={3}>
                     <Sidebar></Sidebar>
                 </Col>
 
-                <Col md={8}>
+                <Col md={9}>
                     <MessageForm></MessageForm>
                 </Col>
 
