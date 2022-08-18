@@ -17,7 +17,7 @@ const reducer = combineReducers({
 
 const persistConfig = {
     key: "root",
-    storage: storageSession,
+    storage: storage,
     blackList: [appApi.reducerPath],
 };
 
