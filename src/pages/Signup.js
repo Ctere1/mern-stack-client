@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useSignupUserMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 import './Signup.css';
 import pp from "../assets/avatar.jpg";
 
@@ -56,12 +58,31 @@ function Signup() {
         //signup
         signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
             if (data) {
-                console.log(data);
                 alert('Account created. Please login now.');
-                navigate("/login");
+                navigate("/login", { state: email });
             }
         });
     }
+
+    function handleCallbackResponse(response) {
+        var userObject = jwt_decode(response.credential);
+        setName(userObject.name)
+        setEmail(userObject.email)
+        setImage(userObject.picture)
+    }
+
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            callback: handleCallbackResponse
+        })
+        google.accounts.id.renderButton(
+            document.getElementById("googleSignIn"),
+            { theme: "filled_black.", size: "large", text: "Sign up with Google" }  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+    }, []);
 
 
     return (
@@ -108,6 +129,7 @@ function Signup() {
                         <div className='py-4'>
                             <p className='text-center'>Already have an account ? <Link to='/login'>Login</Link></p>
                         </div>
+                        <div id='googleSignIn'></div>
                     </Form>
                 </Col>
 

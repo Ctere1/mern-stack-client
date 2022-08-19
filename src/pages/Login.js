@@ -1,12 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Col, Container, Form, Row, Button, Spinner } from "react-bootstrap";
 import { useLoginUserMutation, useAddReferralPointMutation } from "../services/appApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 import { AppContext } from "../context/appContext";
+import jwt_decode from "jwt-decode";
 
 
 function Login() {
+    const location = useLocation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -31,6 +33,28 @@ function Login() {
             }
         });
     }
+
+    function handleCallbackResponse(response) {
+        var userObject = jwt_decode(response.credential);
+        setEmail(userObject.email)
+    }
+
+    useEffect(() => {
+        if (location.state) {
+            setEmail(location.state);
+        }
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            callback: handleCallbackResponse
+        })
+        google.accounts.id.renderButton(
+            document.getElementById("googleSignIn"),
+            { theme: "filled_black.", size: "large" }  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+    }, []);
+
 
     return (
         <Container>
@@ -57,6 +81,7 @@ function Login() {
                                 Don't have an account ? <Link to="/signup">Signup</Link>
                             </p>
                         </div>
+                        <div id='googleSignIn'></div>
                     </Form>
                 </Col>
             </Row>
