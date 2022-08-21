@@ -71,7 +71,7 @@ function Login() {
         })
         google.accounts.id.renderButton(
             document.getElementById("googleSignIn"),
-            { theme: "filled_black.", size: "large", text: "Sign up with Google" }  // customization attributes
+            { theme: "filled_black", size: "large", text: "signin_with" }  // customization attributes
         );
         //google.accounts.id.prompt(); // also display the One Tap dialog
 

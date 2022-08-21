@@ -81,6 +81,7 @@ function Signup() {
         setName(userObject.name)
         setEmail(userObject.email)
         setImage(userObject.picture)
+        setImgPreview(userObject.picture)
     }
 
     useEffect(() => {
@@ -91,7 +92,7 @@ function Signup() {
         })
         google.accounts.id.renderButton(
             document.getElementById("googleSignIn"),
-            { theme: "filled_black.", size: "large", text: "Sign up with Google" }  // customization attributes
+            { theme: "filled_black", size: "large", text: "signup_with" }  // customization attributes
         );
         // google.accounts.id.prompt(); // also display the One Tap dialog
     }, []);
@@ -146,11 +147,8 @@ function Signup() {
                         <div id='googleSignIn'></div>
                     </Form>
                 </Col>
-
                 <Col md={5} className='signup__bg'></Col>
-
             </Row>
-
         </Container>
     )
 }
