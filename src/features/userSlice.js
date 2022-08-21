@@ -20,6 +20,7 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         // save user after login
         builder.addMatcher(appApi.endpoints.loginUser.matchFulfilled, (state, { payload }) => payload.user);
+        builder.addMatcher(appApi.endpoints.googleLogin.matchFulfilled, (state, { payload }) => payload.user);
         // save user after update
         builder.addMatcher(appApi.endpoints.updateUser.matchFulfilled, (state, { payload }) => payload);
         // logout: destroy user session

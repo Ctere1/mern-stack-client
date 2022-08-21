@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useSignupUserMutation } from "../services/appApi";
+import { useSignupUserMutation, useGoogleSignupMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
@@ -19,7 +19,9 @@ function Signup() {
     const [imgPreview, setImgPreview] = useState(null);
 
     const navigate = useNavigate();
-    const [signupUser, { isLoading, error }] = useSignupUserMutation();
+    const [signupUser, { error }] = useSignupUserMutation();
+    const [googleSignup] = useGoogleSignupMutation();
+    const [googleUser, setGoogleUser] = useState('');
 
     function validateImg(e) {
         const file = e.target.files[0];
@@ -56,16 +58,26 @@ function Signup() {
         const url = await uploadeImg(image)
         console.log(url);
         //signup
-        signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
-            if (data) {
-                alert('Account created. Please login now.');
-                navigate("/login", { state: email });
-            }
-        });
+        if (googleUser) {
+            googleSignup({ google: googleUser, referralFromCode }).then(({ data }) => {
+                if (data) {
+                    alert('Account created. Please login now.');
+                    navigate("/login", { state: googleUser });
+                }
+            });
+        } else {
+            signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
+                if (data) {
+                    alert('Account created. Please login now.');
+                    navigate("/login", { state: email });
+                }
+            });
+        }
     }
 
-    function handleCallbackResponse(response) {
+    function handleCallbackGoogleResponse(response) {
         var userObject = jwt_decode(response.credential);
+        setGoogleUser(response)
         setName(userObject.name)
         setEmail(userObject.email)
         setImage(userObject.picture)
@@ -75,13 +87,13 @@ function Signup() {
         /* global google */
         google.accounts.id.initialize({
             client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-            callback: handleCallbackResponse
+            callback: handleCallbackGoogleResponse
         })
         google.accounts.id.renderButton(
             document.getElementById("googleSignIn"),
             { theme: "filled_black.", size: "large", text: "Sign up with Google" }  // customization attributes
         );
-        google.accounts.id.prompt(); // also display the One Tap dialog
+        // google.accounts.id.prompt(); // also display the One Tap dialog
     }, []);
 
 
@@ -92,7 +104,7 @@ function Signup() {
                     <Form style={{ width: '80%', maxWidth: 500 }} onSubmit={handleSignup}>
                         <h1 className='text-center'>Create Account</h1>
                         <div className='signup-pp-container'>
-                            <img src={imgPreview || pp} className='signup-pp' ></img>
+                            <img src={imgPreview || pp} alt='PP' className='signup-pp' ></img>
                             <label htmlFor='image-upload' className='image-upload-label'> <i className='fas fa-plus-circle add-picture-icon'></i>
                             </label>
                             <input type='file' id='image-upload' hidden accept='image/png, image/jpg' onChange={validateImg}></input>
@@ -100,21 +112,23 @@ function Signup() {
                         <Form.Group className="mb-3" controlId="formBasicName">
                             {error && <p className="alert alert-danger">{error.data}</p>}
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Your Name" onChange={(e) => setName(e.target.value)} value={name} />
+                            <Form.Control type="text" placeholder="Your Name" onChange={(e) => setName(e.target.value)} value={name} required />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                            <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} required />
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
-                        </Form.Group>
+                        {!googleUser && (
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+                            </Form.Group>
+                        )}
 
                         <Form.Group className="mb-3" controlId="formBasicText">
                             <Form.Label>Referral Code</Form.Label>

@@ -82,7 +82,25 @@ const appApi = createApi({
                     'Authorization': `Bearer ${getToken(user)}`
                 },
             }),
-        })
+        }),
+
+        // handle Google login
+        googleLogin: builder.mutation({
+            query: (payload) => ({
+                url: "/api/auth/googleLogin",
+                method: "POST",
+                body: payload
+            }),
+        }),
+
+        // handle Google Signup
+        googleSignup: builder.mutation({
+            query: (payload) => ({
+                url: "/api/auth/googleSignup",
+                method: "POST",
+                body: payload
+            }),
+        }),
 
     }),
 });
@@ -109,6 +127,6 @@ function getToken(user) {
     return localStorage.getItem("accessToken");
 }
 
-export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation, useAddReferralPointMutation } = appApi;
+export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation, useAddReferralPointMutation, useGoogleLoginMutation, useGoogleSignupMutation } = appApi;
 
 export default appApi;
