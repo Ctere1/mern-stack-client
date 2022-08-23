@@ -26,7 +26,7 @@ function App() {
         const refreshToken = localStorage.getItem("refreshToken");
         if (refreshToken !== null) {
             const { exp } = jwt_decode(refreshToken)
-            if (Date.now() >= exp) {
+            if (Date.now() >= (exp * 1000)) {
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("refreshToken");
                 localStorage.removeItem("persist:root");
