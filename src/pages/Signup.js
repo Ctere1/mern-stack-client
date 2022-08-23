@@ -144,7 +144,9 @@ function Signup() {
                         <div className='py-4'>
                             <p className='text-center'>Already have an account ? <Link to='/login'>Login</Link></p>
                         </div>
-                        <div id='googleSignIn'></div>
+                        <Row>
+                            <div style={{ width: "initial" }} id='googleSignIn'></div>
+                        </Row>
                     </Form>
                 </Col>
                 <Col md={5} className='signup__bg'></Col>

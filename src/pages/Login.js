@@ -106,8 +106,11 @@ function Login() {
                                 Don't have an account ? <Link to="/signup">Signup</Link>
                             </p>
                         </div>
-                        <div id='googleSignIn'></div>
+                        <Row>
+                            <div style={{ width: "initial" }} id='googleSignIn'></div>
+                        </Row>
                     </Form>
+
                 </Col>
             </Row>
         </Container>
