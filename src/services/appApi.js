@@ -103,6 +103,17 @@ const appApi = createApi({
             }),
         }),
 
+        // get all rooms
+        getAllRooms: builder.mutation({
+            query: (user) => ({
+                url: "/api/room/",
+                method: "GET", 
+                headers: {
+                    'Authorization': getToken(user)
+                },
+            }),
+        }),
+
     }),
 });
 
@@ -124,6 +135,6 @@ function getToken(user) {
     return `Bearer ${localStorage.getItem("accessToken")}`;
 }
 
-export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation, useAddReferralPointMutation, useGoogleLoginMutation, useGoogleSignupMutation } = appApi;
+export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation, useAddReferralPointMutation, useGoogleLoginMutation, useGoogleSignupMutation, useGetAllRoomsMutation } = appApi;
 
 export default appApi;

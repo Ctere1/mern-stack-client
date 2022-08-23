@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { Col, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
-import axios from "axios"
 import { addNotifications, resetNotifications } from "../features/userSlice";
+import { useGetAllRoomsMutation } from "../services/appApi";
 import "./Sidebar.css";
 
 function Sidebar() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const { socket, setMembers, members, setCurrentRoom, setRooms, privateMemberMsg, rooms, setPrivateMemberMsg, currentRoom } = useContext(AppContext);
+    const [getAllRooms] = useGetAllRoomsMutation();
 
     function joinRoom(room, isPublic = true) {
         if (!user) {
@@ -32,7 +33,11 @@ function Sidebar() {
     useEffect(() => {
         if (user) {
             setCurrentRoom("general");
-            getRooms();
+            getAllRooms(user).then(({ data }) => {
+                if (data) {
+                    setRooms(data)
+                }
+            });
             socket.emit("join-room", "general");
             socket.emit("new-user");
         }
@@ -42,10 +47,6 @@ function Sidebar() {
         setMembers(payload);
     });
 
-    function getRooms() {
-        axios.get("http://localhost:5001/api/room")
-            .then((response) => setRooms(response.data));
-    }
 
     function orderIds(id1, id2) {
         if (id1 > id2) {
