@@ -43,7 +43,7 @@ function Sidebar() {
     });
 
     function getRooms() {
-        axios.get("http://localhost:5001/rooms")
+        axios.get("http://localhost:5001/api/room")
             .then((response) => setRooms(response.data));
     }
 
