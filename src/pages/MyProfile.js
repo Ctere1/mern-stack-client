@@ -62,7 +62,7 @@ function MyProfile() {
                             <p>Email: {user.email}</p>
                         </Card.Title>
                         <Card.Text>
-                            <OverlayTrigger trigger="click" placement="left" overlay={popoverCode}>
+                            <OverlayTrigger trigger="click" placement="bottom" overlay={popoverCode}>
                                 <Button variant="success">My Referral Code</Button>
                             </OverlayTrigger>{' '}
                             <Button variant="primary" disabled={isConfettiAnimating || isBalloonsAnimating} onClick={() => { confettiReward(); balloonsReward(); }}>
@@ -102,8 +102,8 @@ function MyProfile() {
                 </Card>
             </Col>
             <Col md={6} className='update__bg' >
-        </Col>
-    </Row >
+            </Col>
+        </Row >
     </Container >
 
     )

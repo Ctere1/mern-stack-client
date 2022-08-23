@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Col, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
+import axios from "axios"
 import { addNotifications, resetNotifications } from "../features/userSlice";
 import "./Sidebar.css";
 
@@ -42,9 +43,8 @@ function Sidebar() {
     });
 
     function getRooms() {
-        fetch("http://localhost:5001/rooms")
-            .then((res) => res.json())
-            .then((data) => setRooms(data));
+        axios.get("http://localhost:5001/rooms")
+            .then((response) => setRooms(response.data));
     }
 
     function orderIds(id1, id2) {
@@ -69,7 +69,7 @@ function Sidebar() {
             <h2>Available Rooms</h2>
             <ListGroup>
                 {rooms.map((room, idx) => (
-                    <ListGroup.Item key={idx} onClick={() => joinRoom(room)} active={room == currentRoom} style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", maxWidth: '29vh' }}>
+                    <ListGroup.Item key={idx} onClick={() => joinRoom(room)} active={room == currentRoom} style={{ cursor: "pointer", display: "flex", justifyContent: "space-between" }}>
                         {room} {currentRoom !== room && <span className="badge rounded-pill bg-primary">{user.newMessages[room]}</span>}
                     </ListGroup.Item>
                 ))}
@@ -82,7 +82,7 @@ function Sidebar() {
                             <img src={member.picture} className="member-status-img" />
                             {member.status == "online" ? <i className="fas fa-circle sidebar-online-status"></i> : <i className="fas fa-circle sidebar-offline-status"></i>}
                         </Col>
-                        <Col xs={9} style={{ marginTop: '13px' }}>
+                        <Col xs={6} style={{ marginTop: '10px', marginRight: '100px' }}>
                             {member.name}
                             {member._id === user?._id && " (You)"}
                             {member.status == "offline" && " (Offline)"}

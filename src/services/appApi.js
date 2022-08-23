@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 // define a service user a base URL
@@ -44,7 +45,7 @@ const appApi = createApi({
                 method: "DELETE",
                 body: payload,
                 headers: {
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': getToken(payload)
                 },
             }),
         }),
@@ -55,7 +56,7 @@ const appApi = createApi({
                 url: "/api/user/all",
                 method: "GET",
                 headers: {
-                    'Authorization': `Bearer ${getToken(user)}`
+                    'Authorization': getToken(user)
                 },
             }),
         }),
@@ -67,7 +68,7 @@ const appApi = createApi({
                 method: "PUT",
                 body: user,
                 headers: {
-                    'Authorization': `Bearer ${getToken(user)}`
+                    'Authorization': getToken(user)
                 },
             }),
         }),
@@ -79,7 +80,7 @@ const appApi = createApi({
                 method: "PUT",
                 body: user,
                 headers: {
-                    'Authorization': `Bearer ${getToken(user)}`
+                    'Authorization': getToken(user)
                 },
             }),
         }),
@@ -106,25 +107,21 @@ const appApi = createApi({
 });
 
 function getToken(user) {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-    const { exp } = jwt_decode(accessToken)
+    const { exp } = jwt_decode(localStorage.getItem("accessToken"))
     // Refresh the token a minute early to avoid latency issues
     const expirationTime = (exp * 1000) - 60000
     if (Date.now() >= expirationTime) {
         console.log('Token expired. Getting new token...');
-        fetch('http://localhost:5001/api/auth/refreshToken', {
-            method: 'POST',
-            body: { token: refreshToken, email: user.email }
-        }).then((response) => {
-            if (response.accessToken) {
-                localStorage.setItem("accessToken", response.accessToken);
-                localStorage.setItem("refreshToken", response.refreshToken);
-                console.log('New token added');
-            }
-        });
+        axios.post('http://localhost:5001/api/auth/refreshToken', { token: localStorage.getItem("refreshToken"), email: user.email })
+            .then((response) => {
+                if (response.data.accessToken) {
+                    localStorage.setItem("accessToken", response.data.accessToken);
+                    localStorage.setItem("refreshToken", response.data.refreshToken);
+                    console.log('New token added');
+                }
+            });
     }
-    return localStorage.getItem("accessToken");
+    return `Bearer ${localStorage.getItem("accessToken")}`;
 }
 
 export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation, useDeleteUserMutation, useGetUsersMutation, useUpdateUserMutation, useAddReferralPointMutation, useGoogleLoginMutation, useGoogleSignupMutation } = appApi;
