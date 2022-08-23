@@ -12,6 +12,8 @@ import { useState, useEffect } from "react";
 import { AppContext, socket } from "./context/appContext";
 import jwt_decode from "jwt-decode";
 import { useLogoutUserMutation } from "./services/appApi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -34,9 +36,16 @@ function App() {
                     localStorage.removeItem("accessToken");
                     localStorage.removeItem("refreshToken");
                     await logoutUser(user);
-                    alert('Your session expired. Please login again');
-                    // redirect to home page
-                    window.location.replace("/");
+                    toast.error('Your session expired. Please login again', {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        onClose: () => window.location.replace('/')
+                    });
                 }
             }
         }
@@ -45,27 +54,30 @@ function App() {
     }, [])
 
     return (
-        <AppContext.Provider value={{ socket, currentRoom, setCurrentRoom, members, setMembers, messages, setMessages, privateMemberMsg, setPrivateMemberMsg, rooms, setRooms, newMessages, setNewMessages }}>
-            <BrowserRouter>
-                <Navigation />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    {!user ? (
-                        <>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<Signup />} />
-                        </>
-                    ) : (
-                        <>
-                            <Route path="/chat" element={<Chat />} />
-                            <Route path="/profile" element={<MyProfile />} />
-                            <Route path="/board" element={<Board />} />
-                        </>
-                    )}
+        <>
+            <AppContext.Provider value={{ socket, currentRoom, setCurrentRoom, members, setMembers, messages, setMessages, privateMemberMsg, setPrivateMemberMsg, rooms, setRooms, newMessages, setNewMessages }}>
+                <BrowserRouter>
+                    <Navigation />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        {!user ? (
+                            <>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/signup" element={<Signup />} />
+                            </>
+                        ) : (
+                            <>
+                                <Route path="/chat" element={<Chat />} />
+                                <Route path="/profile" element={<MyProfile />} />
+                                <Route path="/board" element={<Board />} />
+                            </>
+                        )}
 
-                </Routes>
-            </BrowserRouter>
-        </AppContext.Provider>
+                    </Routes>
+                </BrowserRouter>
+            </AppContext.Provider>
+            <ToastContainer />
+        </>
     );
 }
 

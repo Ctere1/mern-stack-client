@@ -3,7 +3,8 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useSignupUserMutation, useGoogleSignupMutation } from "../services/appApi";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Signup.css';
 import pp from "../assets/avatar.jpg";
 
@@ -26,7 +27,16 @@ function Signup() {
     function validateImg(e) {
         const file = e.target.files[0];
         if (file.size > 1048576) {
-            return alert('Max file size must be 1mb')
+            toast.error('Max file size must be 1 mb', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+            return
         } else {
             setImage(file);
             setImgPreview(URL.createObjectURL(file))
@@ -61,15 +71,32 @@ function Signup() {
         if (googleUser) {
             googleSignup({ google: googleUser, referralFromCode }).then(({ data }) => {
                 if (data) {
-                    alert('Account created. Please login now.');
-                    navigate("/login", { state: googleUser });
+                    toast.info('Account created. Directing to login', {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        onClose: () => navigate("/login", { state: googleUser })
+                    });
                 }
             });
         } else {
             signupUser({ name, email, password, picture: url, referralFromCode }).then(({ data }) => {
                 if (data) {
-                    alert('Account created. Please login now.');
-                    navigate("/login", { state: email });
+                    toast.info('Account created. Directing to login', {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        onClose: () => navigate("/login", { state: email })
+                    });
+
                 }
             });
         }
@@ -99,59 +126,62 @@ function Signup() {
 
 
     return (
-        <Container>
-            <Row>
-                <Col md={7} className='d-flex allign-items-center justify-content-center flex-direction-column'>
-                    <Form style={{ width: '80%', maxWidth: 500 }} onSubmit={handleSignup}>
-                        <h1 className='text-center'>Create Account</h1>
-                        <div className='signup-pp-container'>
-                            <img src={imgPreview || pp} alt='PP' className='signup-pp' ></img>
-                            <label htmlFor='image-upload' className='image-upload-label'> <i className='fas fa-plus-circle add-picture-icon'></i>
-                            </label>
-                            <input type='file' id='image-upload' hidden accept='image/png, image/jpg' onChange={validateImg}></input>
-                        </div>
-                        <Form.Group className="mb-3" controlId="formBasicName">
-                            {error && <p className="alert alert-danger">{error.data}</p>}
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Your Name" onChange={(e) => setName(e.target.value)} value={name} required />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
-                        </Form.Group>
-
-                        {!googleUser && (
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+        <>
+            <Container>
+                <Row>
+                    <Col md={7} className='d-flex allign-items-center justify-content-center flex-direction-column'>
+                        <Form style={{ width: '80%', maxWidth: 500 }} onSubmit={handleSignup}>
+                            <h1 className='text-center'>Create Account</h1>
+                            <div className='signup-pp-container'>
+                                <img src={imgPreview || pp} alt='PP' className='signup-pp' ></img>
+                                <label htmlFor='image-upload' className='image-upload-label'> <i className='fas fa-plus-circle add-picture-icon'></i>
+                                </label>
+                                <input type='file' id='image-upload' hidden accept='image/png, image/jpg' onChange={validateImg}></input>
+                            </div>
+                            <Form.Group className="mb-3" controlId="formBasicName">
+                                {error && <p className="alert alert-danger">{error.data}</p>}
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control type="text" placeholder="Your Name" onChange={(e) => setName(e.target.value)} value={name} required />
                             </Form.Group>
-                        )}
 
-                        <Form.Group className="mb-3" controlId="formBasicText">
-                            <Form.Label>Referral Code</Form.Label>
-                            <Form.Control type="text" placeholder="Enter code" onChange={(e) => setReferralFromCode(e.target.value)} value={referralFromCode} />
-                            <Form.Text className="text-muted">
-                                (optional)
-                            </Form.Text>
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            {uploadingImg ? 'Signing you up..' : 'Signup'}
-                        </Button>
-                        <div className='py-4'>
-                            <p className='text-center'>Already have an account ? <Link to='/login'>Login</Link></p>
-                        </div>
-                        <Row>
-                            <div style={{ width: "initial" }} id='googleSignIn'></div>
-                        </Row>
-                    </Form>
-                </Col>
-                <Col md={5} className='signup__bg'></Col>
-            </Row>
-        </Container>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} required />
+                                <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                </Form.Text>
+                            </Form.Group>
+
+                            {!googleUser && (
+                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+                                </Form.Group>
+                            )}
+
+                            <Form.Group className="mb-3" controlId="formBasicText">
+                                <Form.Label>Referral Code</Form.Label>
+                                <Form.Control type="text" placeholder="Enter code" onChange={(e) => setReferralFromCode(e.target.value)} value={referralFromCode} />
+                                <Form.Text className="text-muted">
+                                    (optional)
+                                </Form.Text>
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                {uploadingImg ? 'Signing you up..' : 'Signup'}
+                            </Button>
+                            <div className='py-4'>
+                                <p className='text-center'>Already have an account ? <Link to='/login'>Login</Link></p>
+                            </div>
+                            <Row>
+                                <div style={{ width: "initial" }} id='googleSignIn'></div>
+                            </Row>
+                        </Form>
+                    </Col>
+                    <Col md={5} className='signup__bg'></Col>
+                </Row>
+            </Container>
+            <ToastContainer />
+        </>
     )
 }
 
