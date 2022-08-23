@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { AppContext, socket } from "./context/appContext";
 import jwt_decode from "jwt-decode";
+import { useLogoutUserMutation } from "./services/appApi";
 
 
 function App() {
@@ -21,19 +22,26 @@ function App() {
     const [privateMemberMsg, setPrivateMemberMsg] = useState({});
     const [newMessages, setNewMessages] = useState({});
     const user = useSelector((state) => state.user);
+    const [logoutUser] = useLogoutUserMutation();
 
     useEffect(() => {
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (refreshToken !== null) {
-            const { exp } = jwt_decode(refreshToken)
-            if (Date.now() >= (exp * 1000)) {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-                localStorage.removeItem("persist:root");
-                alert('Your session expired. Please login again');
-                window.location.replace("/");
+
+        const checkToken = async () => {
+            const refreshToken = localStorage.getItem("refreshToken");
+            if (refreshToken !== null) {
+                const { exp } = jwt_decode(refreshToken)
+                if (Date.now() >= (exp * 1000)) {
+                    localStorage.removeItem("accessToken");
+                    localStorage.removeItem("refreshToken");
+                    await logoutUser(user);
+                    alert('Your session expired. Please login again');
+                    // redirect to home page
+                    window.location.replace("/");
+                }
             }
         }
+        checkToken()
+
     }, [])
 
     return (
