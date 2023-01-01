@@ -48,10 +48,12 @@ $ npm start
 ```
 
 ## 🪟Screenshots
+### **Home Page**
+> * Home page.
+> ![1](https://user-images.githubusercontent.com/62745858/210178395-df920c96-1590-4eba-bcfb-ceb06fa375b3.png)
 
-![1](https://user-images.githubusercontent.com/62745858/210178395-df920c96-1590-4eba-bcfb-ceb06fa375b3.png)
 
-### **Login-Signup Pages**
+### **Login - Signup Pages**
 > * User can login on this page.
 >
 >   ![2](https://user-images.githubusercontent.com/62745858/210178375-2bdc1697-871f-46c8-94b0-1a7fb985d1db.png)
@@ -90,5 +92,5 @@ This software uses the following open source packages:
 ## 📌Contributors
 
 <a href="https://github.com/Ctere1/">
-  <img src="https://contrib.rocks/image?repo=Ctere1/Ctere1" />
+  <img src="https://contrib.rocks/image?repo=Ctere1/mern-stack-client"/>
 </a>
