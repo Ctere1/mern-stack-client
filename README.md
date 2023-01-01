@@ -50,7 +50,8 @@ $ npm start
 ## 🪟Screenshots
 ### **Home Page**
 > * Home page.
-> ![1](https://user-images.githubusercontent.com/62745858/210178395-df920c96-1590-4eba-bcfb-ceb06fa375b3.png)
+>
+>   ![1](https://user-images.githubusercontent.com/62745858/210178395-df920c96-1590-4eba-bcfb-ceb06fa375b3.png)
 
 
 ### **Login - Signup Pages**
