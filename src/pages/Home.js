@@ -21,7 +21,7 @@ function Home() {
             <Col md={6} className='d-flex flex-direction-column align-items-center justify-content-center'>
                 <div className='app-name'>
                     <h1 >Share the world with your friends</h1>
-                    <p>Student Metaverse Nightclub Loyalty App</p>
+                    <p>Student Club Chat App</p>
                     <Button variant='success' onClick={handleRoute}>{user ? 'Chat' : 'Get Started'}  <i className='fas fa-comments home-message-icon'></i></Button>
                 </div>
             </Col>
