@@ -1,74 +1,89 @@
-# Getting Started with Create React App
+<h1 align="center">
+  Mern Stack Chat App Client
+  <br>
+</h1>
 
-Live: https://student-club-mern.herokuapp.com/
+<p align="center">
+  <a href="#introduction">Introduction</a> •
+  <a href="#installation-guide">Installation Guide</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#license">License</a> •
+  <a href="#contributors">Contributors</a> 
+</p>
 
-For server side see: https://github.com/Ctere1/mern-stack-server
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub Repo stars](https://img.shields.io/github/stars/Ctere1/mern-stack-client?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Ctere1/mern-stack-client?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/Ctere1/mern-stack-client?style=social)
 
-## Available Scripts
+</div>
 
-In the project directory, you can run:
+## ℹ️Introduction
+Chat Application that you can chat with application's users using MERN STACK.
 
-### `npm start`
+Authentication and authorization processes are performed using OAuth 2.0.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+For Server Side see: https://github.com/Ctere1/mern-stack-server
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📃Installation Guide
 
-### `npm test`
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Clone this repository
+$ git clone https://github.com/Ctere1/mern-stack-client
+# Go into the repository
+$ cd mern-stack-client
+# Install dependencies
+$ npm install
+# Run the app
+$ npm start
+```
 
-### `npm run build`
+## 🪟Screenshots
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![1](https://user-images.githubusercontent.com/62745858/210178395-df920c96-1590-4eba-bcfb-ceb06fa375b3.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **Login-Signup Pages**
+> * User can login on this page.
+>
+>   ![2](https://user-images.githubusercontent.com/62745858/210178375-2bdc1697-871f-46c8-94b0-1a7fb985d1db.png)
+>
+> * User can signup on this page.
+>
+>   ![3](https://user-images.githubusercontent.com/62745858/210178382-d9f5eaef-7c22-453c-94db-70e3aa37d10e.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **User Pages**
+> * User can see information about all private chats and public room chats on this page.
+>
+>   ![4](https://user-images.githubusercontent.com/62745858/210178414-19f13a17-3ede-4745-918d-b1bb1f76f94b.png)
+>
+> * User can see all user's points on this page (Leaderboard).
+> 
+>   ![5](https://user-images.githubusercontent.com/62745858/210178420-f0f9f29b-f6ff-4ae7-949d-0fc33e8d5179.png)
+>
+> * User can edit own credentials (Updating password-username, Deleting the account). Also user can see own referral code and points on this page.
+> 
+>   ![6](https://user-images.githubusercontent.com/62745858/210178423-6e1ead35-f1f0-4a0b-a821-85208ae1361f.png)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📝Credits
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This software uses the following open source packages:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Dotenv](https://github.com/motdotla/dotenv)
+- [Socket.io Client](https://socket.io/)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## ©License
+![GitHub](https://img.shields.io/github/license/Ctere1/mern-stack-client)
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📌Contributors
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<a href="https://github.com/Ctere1/">
+  <img src="https://contrib.rocks/image?repo=Ctere1/Ctere1" />
+</a>
