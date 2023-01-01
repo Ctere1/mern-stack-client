@@ -1,5 +1,10 @@
 <h1 align="center">
   Mern Stack Chat App Client
+  
+  ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+  ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+  ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+  ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
   <br>
 </h1>
 
@@ -25,7 +30,7 @@ Chat Application that you can chat with application's users using MERN STACK.
 
 Authentication process is performed using `OAuth 2.0`.
 
-For Server Side see: https://github.com/Ctere1/mern-stack-server
+For **Server Side** see: [Mern Stack Chat App Server](https://github.com/Ctere1/mern-stack-server)
 
 ## 📃Installation Guide
 
